@@ -10,22 +10,21 @@ import javax.crypto.spec.PBEKeySpec;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class GlobalUtils {
 	public static final Logger log = LoggerFactory.getLogger(GlobalUtils.class);
+	static BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
 	public static boolean matchPassword(String hashPassFromDB, String userEnteredPassword)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
-		String base64Hash = hashPassword(userEnteredPassword);
-		return base64Hash.equals(hashPassFromDB);
+		
+//		String hashPassword = bCryptPasswordEncoder.encode(hashPassFromDB);
+		return bCryptPasswordEncoder.matches(userEnteredPassword, hashPassFromDB);
 	}
 	public static String hashPassword(String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
-		SecureRandom secureRandom = new SecureRandom();
-		byte[] salt = secureRandom.generateSeed(12);
-		PBEKeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray(), salt, 10, 512);
-		SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
-		byte[] hash = skf.generateSecret(pbeKeySpec).getEncoded();
-		String base64Hash = Base64.getMimeEncoder().encodeToString(hash);
+				
+		String base64Hash = bCryptPasswordEncoder.encode(password);
 		return base64Hash;
 	}
 }

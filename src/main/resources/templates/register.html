@@ -17,7 +17,7 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	flex-direction:column;
+	flex-direction: column;
 }
 
 .container {
@@ -29,38 +29,41 @@ body {
 	padding: 10vh;
 	border: 2px solid black;
 	border-radius: 10px;
-
-	
 }
 </style>
 </head>
 <body>
 
 
-	<form action="#" th:action="@{/login}" th:object="${user}"
+	<form action="#" th:action="@{/register}" th:object="${user}"
 		class="container" method="post">
 		<div class="mb-3">
 			<label for="exampleInputEmail1" class="form-label">Email
 				address:</label> <input type="email" class="form-control"
 				id="exampleInputEmail1" th:field="*{email}"
 				aria-describedby="emailHelp">
-		
+			<div id="emailHelp" class="form-text">We'll never share your
+				email with anyone else.</div>
 		</div>
 		<div class="mb-3">
-			<label for="exampleInputPassword1" class="form-label"
-				>Password</label> <input type="password" th:field="*{password}"
+			<label for="exampleInputPassword1" class="form-label">Enter
+				your Name:</label> <input type="text" th:field="*{name}"
+				class="form-control" id="exampleInputPassword1">
+		</div>
+		<div class="mb-3">
+			<label for="exampleInputPassword1" class="form-label">Password</label>
+			<input type="password" th:field="*{password}" class="form-control"
+				id="exampleInputPassword1">
+		</div>
+		<div class="mb-3">
+			<label for="exampleInputPassword1" class="form-label">Confirm
+				Password</label> <input th:field="*{confirmPassword}" type="password"
 				class="form-control" id="exampleInputPassword1">
 		</div>
 
 		<button type="submit" class="btn btn-primary">Submit</button>
-		<div class="mb-3">
-			<a href="/register" class="link-dark"
-				style="margin-top: 2px; font-size: 0.8em">Create an account</a>
-		</div>
 	</form>
 	<div class="alert alert-danger" role="alert" th:text="${error}" style="padding:2vh 3vw;"
 		th:if="${error}"></div>
-
-
 </body>
 </html>
